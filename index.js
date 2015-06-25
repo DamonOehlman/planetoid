@@ -2,6 +2,14 @@ var request = require('request');
 var kgo = require('kgo');
 var defaults = require('cog/defaults');
 
+function checkOpts(opts, callback) {
+  if (! opts.gameid) {
+    return callback(new Error('no gameid specified'));
+  }
+
+  callback();
+}
+
 function login(opts, callback) {
   var formData = {
     username: opts.username,
@@ -27,10 +35,19 @@ function parseApiKey(body, callback) {
 }
 
 function loadTurn(opts, apikey, callback) {
-  console.log('got apikey: ', apikey)
+  var qs = {
+    gameid: opts.gameid,
+    apikey: apikey
+  };
+
+  request.get(opts.baseUrl + '/game/loadturn', { qs: qs }, callback);
 }
 
-module.exports = function(opts) {
+function processTurn(turndata, callback) {
+  console.login('got turn data: ', turndata);
+}
+
+module.exports = function(opts, callback) {
   var configName = (opts || {}).app || 'planetoid';
   var config = require('rc')(configName, {
     baseUrl: 'http://api.planets.nu'
@@ -38,8 +55,11 @@ module.exports = function(opts) {
 
   kgo
   ({ opts: defaults({}, opts, config) })
-  ('loginRes', 'login', ['opts'], login)
+  ('checkOpts', ['opts'], checkOpts)
+  ('loginRes', 'login', ['!checkOpts', 'opts'], login)
   ('apikey', ['login'], parseApiKey)
-  ('load-turn', ['opts', 'apikey'], loadTurn)
+  ('turndataRes', 'turndata', ['opts', 'apikey'], loadTurn)
+  ('processTurn', ['turndata'], processTurn)
+  .on('error', callback)
 };
 
