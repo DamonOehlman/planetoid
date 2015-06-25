@@ -33,12 +33,11 @@ function loadTurn(opts, apikey, callback) {
     apikey: apikey
   };
 
-  console.log(apikey);
   request.get(opts.baseUrl + '/game/loadturn', { qs: qs, gzip: true }, callback);
 }
 
 function processTurn(turndata, callback) {
-  console.log('got turn data', turndata);
+  console.log(turndata);
 }
 
 module.exports = function(opts, callback) {
