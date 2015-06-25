@@ -16,17 +16,10 @@ function login(opts, callback) {
     password: opts.password
   };
 
-  request.post(opts.baseUrl + '/login', { form: formData }, callback);
+  request.post(opts.baseUrl + '/login', { form: formData, json: true }, callback);
 }
 
 function parseApiKey(body, callback) {
-  try {
-    body = JSON.parse(body);
-  }
-  catch (e) {
-    return callback(e);
-  }
-
   if (! body.success) {
     return callback(new Error('could not login'));
   }
@@ -40,11 +33,12 @@ function loadTurn(opts, apikey, callback) {
     apikey: apikey
   };
 
-  request.get(opts.baseUrl + '/game/loadturn', { qs: qs }, callback);
+  console.log(apikey);
+  request.get(opts.baseUrl + '/game/loadturn', { qs: qs, gzip: true }, callback);
 }
 
 function processTurn(turndata, callback) {
-  console.login('got turn data: ', turndata);
+  console.log('got turn data', turndata);
 }
 
 module.exports = function(opts, callback) {
