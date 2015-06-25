@@ -2,6 +2,38 @@ var request = require('request');
 var kgo = require('kgo');
 var defaults = require('cog/defaults');
 
+/**
+  # planetoid
+
+  This is an in-progress helper for working with the [planets.nu](http://planets.nu)
+  API.
+
+  ## Usage
+
+  First install:
+
+  ```
+  npm install -g planetoid
+  ```
+
+  Then you will be able to retrieve turn data for a game you are currently playing
+  using the following command:
+
+  ```
+  planetoid --username=foo --password=bar --gameid=1234
+  ```
+
+  Additionally, you can create an [rc](https://github.com/dominictarr/rc) compatible
+  configuration file and provide `username` and `password` information there instead.
+  For example I have on my machine a `~/.config/planetoid` file containing something
+  similar to the following:
+
+  ```
+  username=foo
+  password=bar
+  ```
+**/
+
 function checkOpts(opts, callback) {
   if (! opts.gameid) {
     return callback(new Error('no gameid specified'));

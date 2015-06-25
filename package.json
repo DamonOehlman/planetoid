@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "A planets.nu helper",
   "main": "index.js",
+  "bin": {
+    "planetoid": "./bin/planetoid"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gendocs": "gendocs > README.md"
   },
   "repository": {
     "type": "git",
