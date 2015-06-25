@@ -18,5 +18,13 @@
   "bugs": {
     "url": "https://github.com/DamonOehlman/planetoid/issues"
   },
-  "homepage": "https://github.com/DamonOehlman/planetoid#readme"
+  "homepage": "https://github.com/DamonOehlman/planetoid#readme",
+  "dependencies": {
+    "cog": "^1.1.0",
+    "hyperquest": "^1.2.0",
+    "kgo": "^2.0.4",
+    "nopt": "^3.0.3",
+    "rc": "^1.0.3",
+    "request": "^2.58.0"
+  }
 }
